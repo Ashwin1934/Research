@@ -30,21 +30,38 @@ class Stock(base):
         self.ticker = ticker
         self.price = price
         
+    def __repr__(self):
+        return repr(self.ticker + ':' + str(self.price)) 
+        
 base.metadata.create_all(engine)
         
 Microsoft = Stock("MSFT", 189)
 Facebook = Stock("FB", 210)
 AMD = Stock("AMD", 50)
 TSLA = Stock("TSLA", 820)
-session.add(Microsoft)       #already entered msft into the database
-session.commit()
-session.add(Facebook)
-session.add(AMD)
-session.add(TSLA)
-session.commit()
+
+#session.add(Microsoft)       #already entered msft into the database
+#session.commit()
+#session.add(Facebook)
+#session.add(AMD)
+#session.add(TSLA)
+#session.commit()
+
+#accessing attributes from the objects
+print(Microsoft.price)
 
 
-#accessing attributes of database
+#inserting multiple objects at once
+Nvidia = Stock("NVID",295)
+Micron = Stock("MU", 58)
+TSM = Stock("TSM", 55)
+
+#session.bulk_save_objects([Nvidia, Micron, TSM])
+#session.commit()
+
+
+
+
 
     
 
