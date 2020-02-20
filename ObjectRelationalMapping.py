@@ -7,7 +7,7 @@ Created on Sat Jan 25 19:20:48 2020
 
 import sqlalchemy
 import pymysql
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -70,10 +70,22 @@ for stock in session.query(Stock):
 #can print out the attributes as tuples
 print(session.query(Stock.ticker, Stock.price).first())
 
-#ordering the objects by a certain attribute
+#ordering the objects by a certain attribute (ascending order)
 stockList = session.query(Stock).order_by(Stock.price)
 for stock in stockList:
     print(stock)
+    
+#allows you to calculate the sum of a certain column (such as prices)
+equity = session.query(func.sum(Stock.price)).scalar()
+print(equity)
+
+#putting a lable onto a total or sum
+query = session.query(func.sum(Stock.price).label('Equity')).first()
+print(query.Equity)
+
+
+    
+
 
 
 
