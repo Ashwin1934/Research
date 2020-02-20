@@ -59,7 +59,21 @@ TSM = Stock("TSM", 55)
 #session.bulk_save_objects([Nvidia, Micron, TSM])
 #session.commit()
 
+#making a query and printing out the entire list
+stocks = session.query(Stock).all()
+print(stocks)
 
+#alternate way of accessing the objects
+for stock in session.query(Stock):
+    print(stock)
+    
+#can print out the attributes as tuples
+print(session.query(Stock.ticker, Stock.price).first())
+
+#ordering the objects by a certain attribute
+stockList = session.query(Stock).order_by(Stock.price)
+for stock in stockList:
+    print(stock)
 
 
 
