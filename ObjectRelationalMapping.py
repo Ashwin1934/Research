@@ -15,10 +15,11 @@ from sqlalchemy.orm import sessionmaker
 #root@127.0.0.1:3306
 
 database_URI = 'mysql+pymysql://root:@localhost:3306/MyDatabase'
-engine = create_engine(database_URI, echo = True)
+engine = create_engine(database_URI, echo=True)
 base = declarative_base()
 
 session = sessionmaker(bind=engine)()
+
 
 
 class Stock(base):
@@ -34,7 +35,42 @@ class Stock(base):
     def __repr__(self):
         return repr(self.ticker + ':' + str(self.price)) 
         
-base.metadata.create_all(engine)
+base.metadata.create_all(engine, checkfirst=True)
+
+
+#base.metadata.drop_all(engine)
+        
+
+        
+#Stock.__table__.create(bind=engine, checkfirst=True)
+
+#using inspector to detect if table already exists
+from sqlalchemy.engine.reflection import Inspector
+#engine is declared above
+inspector = Inspector.from_engine(engine)
+print(inspector.get_table_names())
+
+tables = inspector.get_table_names()
+tablename = "stockprices"
+
+
+#adding to volume column
+
+stocks = session.query(Stock).all()
+
+for stock in stocks:
+    volume = 10000
+    stock.volume = volume
+    session.add(stock)
+    
+    session.commit()
+    session.close()
+
+
+
+
+
+
         
 Microsoft = Stock("MSFT", 189)
 Facebook = Stock("FB", 210)
@@ -47,6 +83,7 @@ TSLA = Stock("TSLA", 820)
 #session.add(AMD)
 #session.add(TSLA)
 #session.commit()
+#session.close()
 
 """
 
