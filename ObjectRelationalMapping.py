@@ -14,7 +14,7 @@ from sqlalchemy.orm import sessionmaker
 
 #root@127.0.0.1:3306
 
-database_URI = 'mysql+pymysql://root:Research2020@localhost:3306/MyDatabase'
+database_URI = 'mysql+pymysql://root:@localhost:3306/MyDatabase'
 engine = create_engine(database_URI, echo = True)
 base = declarative_base()
 
@@ -25,6 +25,7 @@ class Stock(base):
     __tablename__ = "StockPrices"
     ticker = Column('Ticker', String(5), primary_key = True)
     price = Column('Price', Integer)
+    volume = Column('Volume', Integer)
     
     def __init__(self, ticker, price):
         self.ticker = ticker
@@ -46,6 +47,8 @@ TSLA = Stock("TSLA", 820)
 #session.add(AMD)
 #session.add(TSLA)
 #session.commit()
+
+"""
 
 #accessing attributes from the objects
 print(Microsoft.price)
@@ -82,6 +85,8 @@ print(equity)
 #putting a lable onto a total or sum
 query = session.query(func.sum(Stock.price).label('Equity')).first()
 print(query.Equity)
+
+"""
 
 
     
