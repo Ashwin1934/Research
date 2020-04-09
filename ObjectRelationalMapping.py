@@ -27,6 +27,9 @@ class Stock(base):
     ticker = Column('Ticker', String(5), primary_key = True)
     price = Column('Price', Integer)
     volume = Column('Volume', Integer)
+    shares = Column('Shares', Integer)
+    name = Column('name', String(5))
+    
     
     def __init__(self, ticker, price):
         self.ticker = ticker
@@ -35,7 +38,11 @@ class Stock(base):
     def __repr__(self):
         return repr(self.ticker + ':' + str(self.price)) 
         
-base.metadata.create_all(engine, checkfirst=True)
+#base.metadata.create_all(engine, checkfirst=True)
+        
+
+
+
 
 
 #base.metadata.drop_all(engine)
@@ -43,7 +50,7 @@ base.metadata.create_all(engine, checkfirst=True)
 
         
 #Stock.__table__.create(bind=engine, checkfirst=True)
-
+"""
 #using inspector to detect if table already exists
 from sqlalchemy.engine.reflection import Inspector
 #engine is declared above
@@ -53,11 +60,16 @@ print(inspector.get_table_names())
 tables = inspector.get_table_names()
 tablename = "stockprices"
 
+session.close()
+
 
 #adding to volume column
 
-stocks = session.query(Stock).all()
+#stocks = session.query(Stock).all()
 
+#filling in the added column with new values
+"""
+"""
 for stock in stocks:
     volume = 10000
     stock.volume = volume
@@ -65,25 +77,27 @@ for stock in stocks:
     
     session.commit()
     session.close()
+"""
 
 
 
 
 
-
-        
+"""       
 Microsoft = Stock("MSFT", 189)
 Facebook = Stock("FB", 210)
 AMD = Stock("AMD", 50)
 TSLA = Stock("TSLA", 820)
 
-#session.add(Microsoft)       #already entered msft into the database
-#session.commit()
-#session.add(Facebook)
-#session.add(AMD)
-#session.add(TSLA)
-#session.commit()
-#session.close()
+
+session.add(Microsoft)       #already entered msft into the database
+session.commit()
+session.add(Facebook)
+session.add(AMD)
+session.add(TSLA)
+session.commit()
+session.close()
+"""
 
 """
 
